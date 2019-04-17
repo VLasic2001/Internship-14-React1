@@ -22,14 +22,14 @@ class App extends Component {
         "Butter"
       ],
       basketItems: [
-        {label: "Strawberry", amount: 2}
       ]
     };
-    this.addItemToBasket = this.addItemToBasket.bind(this);
-    this.removeItemFromBasket = this.removeItemFromBasket.bind(this);
+    this.handleAddItemClick = this.handleAddItemClick.bind(this);
+    this.handleRemoveItemClick = this.handleRemoveItemClick.bind(this);
+    this.handleRemoveAllItems = this.handleRemoveAllItems.bind(this);
   }
 
-  addItemToBasket(item) {
+  handleAddItemClick(item) {
     if(this.state.basketItems.find(basketItem => basketItem.label == item)){
       var itemToUpdate = this.state.basketItems.find(basketItem => basketItem.label == item)
       var prevBasket = this.state.basketItems;
@@ -40,7 +40,7 @@ class App extends Component {
     this.setState(state => state.basketItems.push({label: item, amount: 1}))
   }
 
-  removeItemFromBasket(item) {
+  handleRemoveItemClick(item) {
     var itemToUpdate = this.state.basketItems.find(basketItem => basketItem.label == item)
     itemToUpdate.amount--;
     var prevBasket = this.state.basketItems;
@@ -51,11 +51,15 @@ class App extends Component {
     }
   }
 
+  handleRemoveAllItems(){
+    this.setState({basketItems: []});
+  }
+
   render() {
     return (
       <div className="container">
-        <ItemsColumn items={this.state.items} onClick={this.addItemToBasket} />
-        <BasketColumn basketItems={Array.from(this.state.basketItems)} onClick={this.removeItemFromBasket}/>
+        <ItemsColumn items={this.state.items} onClick={this.handleAddItemClick} />
+        <BasketColumn basketItems={Array.from(this.state.basketItems)} onRemoveItemClick={this.handleRemoveItemClick} onRemoveAllClick={this.handleRemoveAllItems}/>
       </div>
     );
   }
