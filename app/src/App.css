@@ -50,6 +50,32 @@
   background-color: lightgray; 
   margin-bottom: 15px;
   padding-left: 30px;
+  border-radius: 4px;
+}
+
+.basket-row{
+  position: relative;
+  padding: 5px;
+  background-color: lightgray; 
+  margin-bottom: 15px;
+  padding-left: 30px;
+  border-radius: 4px;
+}
+
+.basket-row::before{
+  position: absolute;
+  left: 5px;
+  content: "-";
+  font-weight: 900;
+  margin-right: 15px;
+  color: white;
+  border: 2px solid white;
+  border-radius: 4px;
+}
+
+.basket-row:hover:before{
+  background-color: red;
+  border-color: red;
 }
 
 .item-row::before{

@@ -25,12 +25,26 @@ class App extends Component {
         {label: "Strawberry", amount: 2}
       ]
     };
+    this.addItemToBasket = this.addItemToBasket.bind(this);
   }
+
+  addItemToBasket(item) {
+    if(this.state.basketItems.find(basketItem => basketItem.label == item)){
+      var itemToUpdate = this.state.basketItems.find(basketItem => basketItem.label == item)
+      var prevBasket = this.state.basketItems;
+      itemToUpdate.amount++;
+      this.setState({basketItems: prevBasket});
+      return;
+    }
+
+    this.setState(state => state.basketItems.push({label: item, amount: 1}))
+  }
+
   render() {
     return (
       <div className="container">
-        <ItemsColumn items={this.state.items} />
-        <BasketColumn basketItems={this.state.basketItems} />
+        <ItemsColumn items={this.state.items} onClick={this.addItemToBasket} />
+        <BasketColumn basketItems={Array.from(this.state.basketItems)} />
       </div>
     );
   }

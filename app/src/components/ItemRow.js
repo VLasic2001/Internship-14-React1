@@ -1,7 +1,12 @@
 import React from 'react';
 
-const ItemRow = props => {
-    return <span className="item-row">{props.label}</span>;
+class ItemRow extends React.Component {
+    handleClick = () =>{
+        this.props.onClick(this.props.label);
+    }
+    render(){
+    return <span className="item-row" onClick={this.handleClick}>{this.props.label}</span>
+    };
 }
 
 export default ItemRow;
