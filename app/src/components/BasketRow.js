@@ -21,7 +21,6 @@ class BasketRow extends React.Component {
   }
 
   render() {
-    console.log(this.props.crossed);
     return (
       <li
         className={this.props.crossed ? "item-row crossed" : "item-row"}

@@ -77,9 +77,6 @@ class App extends Component {
     var prevBasket = this.state.basketItems;
     itemToUpdate.crossed = true;
     this.setState({ basketItems: prevBasket });
-    console.log(
-      this.state.basketItems.find(basketItem => basketItem.label === label)
-    );
   }
 
   render() {
