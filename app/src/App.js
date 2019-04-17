@@ -26,6 +26,7 @@ class App extends Component {
       ]
     };
     this.addItemToBasket = this.addItemToBasket.bind(this);
+    this.removeItemFromBasket = this.removeItemFromBasket.bind(this);
   }
 
   addItemToBasket(item) {
@@ -36,15 +37,25 @@ class App extends Component {
       this.setState({basketItems: prevBasket});
       return;
     }
-
     this.setState(state => state.basketItems.push({label: item, amount: 1}))
+  }
+
+  removeItemFromBasket(item) {
+    var itemToUpdate = this.state.basketItems.find(basketItem => basketItem.label == item)
+    itemToUpdate.amount--;
+    var prevBasket = this.state.basketItems;
+    this.setState({basketItems: prevBasket});
+    if(!itemToUpdate.amount){
+      let filteredBasket = this.state.basketItems.filter(basketItem => basketItem.label !== itemToUpdate.label)
+      this.setState({basketItems: filteredBasket});
+    }
   }
 
   render() {
     return (
       <div className="container">
         <ItemsColumn items={this.state.items} onClick={this.addItemToBasket} />
-        <BasketColumn basketItems={Array.from(this.state.basketItems)} />
+        <BasketColumn basketItems={Array.from(this.state.basketItems)} onClick={this.removeItemFromBasket}/>
       </div>
     );
   }
