@@ -3,33 +3,34 @@ import React from "react";
 class BasketRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      crossText: this.isTextCrossed ? "crossed item-row" : "item-row"
+    this.state = { crossed: false };
+  }
+  handleRemoveClick = e => {
+    if (!this.props.crossed) {
+      this.props.onRemoveItemClick(this.props.label);
     }
-    this.isTextCrossed = false;
-}
-
-
-  handleRemoveClick = (e) => {
-    if(this.isTextCrossed){
-        this.props.onRemoveItemClick(this.props.label);
-    }
-    e.stopPropagation()
+    e.stopPropagation();
   };
 
   handleTextClick = () => {
-    this.setState({
-      crossText: "crossed item-row"
-    });
+    this.props.onTextClick(this.props.label);
   };
 
+  componentWillReceiveProps({ crossed }) {
+    this.setState({ ...this.state.crossed, crossed });
+  }
+
   render() {
+    console.log(this.props.crossed);
     return (
-      <li className={this.state.crossText} onClick={this.handleTextClick}> 
+      <li
+        className={this.props.crossed ? "item-row crossed" : "item-row"}
+        onClick={this.handleTextClick}
+      >
         <span>
-        <span className="minus" onClick={this.handleRemoveClick}>
-          -
-        </span>
+          <span className="minus" onClick={this.handleRemoveClick}>
+            -
+          </span>
           {this.props.amount} {this.props.label}
         </span>
       </li>
